@@ -1,0 +1,37 @@
+{
+  "name": "Gitlab Fix TOC",
+  "version": "0.1",
+  "manifest_version": 2,
+  "author": "hikaru4",
+  "description": "Fix TOC for Gitlab",
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "images/gitlab.png",
+    "48": "images/gitlab.png",
+    "128": "images/gitlab.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/gitlab.png",
+      "38": "images/gitlab.png"
+    },
+    "default_title": "Gitlab Fix TOC"
+  },
+  "web_accessible_resources": ["css/*", "fonts/*"],
+  "content_scripts": [{
+    "matches": [
+      "<all_urls>"
+    ],
+    "css": [
+      "css/main.css"
+    ],
+    "js": [
+      "js/jquery-1.12.4.min.js",
+      "js/jquery-ui.js",
+      "main.js"
+    ],
+    "run_at": "document_end"
+  }]
+}

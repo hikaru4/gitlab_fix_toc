@@ -1,0 +1,16 @@
+.gitlab_toc {
+  background-color: #ffffdd;
+  position: fixed !important;
+  top: 10em;
+  left: 60%;
+  z-index: 999;
+  height: 60%;
+  width: 25%;
+  padding-left: 0px;
+  padding-top: 10px;
+  overflow: auto;
+}
+
+.gitlab_toc_ul {
+  padding-left: 25px;
+}
