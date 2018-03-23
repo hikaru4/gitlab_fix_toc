@@ -25,6 +25,7 @@
       "<all_urls>"
     ],
     "css": [
+      "css/jquery-ui.css",
       "css/main.css"
     ],
     "js": [

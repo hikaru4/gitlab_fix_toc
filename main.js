@@ -54,8 +54,7 @@ function checkFileReady() {
         toc += "</ul></div>";
         $("body").append($(toc));
 
-        // TODO: make resizable working
-        // $(".gitlab_toc").resizable();
+        $(".gitlab_toc").resizable({handles: "all"});
         $(".gitlab_toc").draggable();
     }
 }
