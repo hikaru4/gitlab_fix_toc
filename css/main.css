@@ -4,7 +4,7 @@
   top: 10em;
   left: 60%;
   z-index: 999;
-  height: 60%;
+  max-height: 60%;
   width: 25%;
   padding-left: 0px;
   padding-top: 10px;

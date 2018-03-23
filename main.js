@@ -13,7 +13,7 @@ var vm = {　　　　
     },
     isIssuePage: function () {
         return $(".issue-details").size() > 0;
-    },
+    }
 };
 
 
@@ -52,13 +52,10 @@ function checkFileReady() {
             }
         }
         toc += "</ul></div>";
-        console.log(toc);
         $("body").append($(toc));
-        var resize = '<div id="resizable" class="ui-widget-content"><h3 class="ui-widget-header">Resizable</h3></div>';
-        $("body").append($(resize));
-        $("#resizable").resizable();
 
-        $(".gitlab_toc").resizable();
+        // TODO: make resizable working
+        // $(".gitlab_toc").resizable();
         $(".gitlab_toc").draggable();
     }
 }
@@ -66,4 +63,3 @@ function checkFileReady() {
 $(function () {
     checkFileReady();
 });
-
