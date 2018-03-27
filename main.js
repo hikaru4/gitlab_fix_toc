@@ -21,6 +21,8 @@ function checkFileReady() {
     var fileContent = null,
         level = 1,
         prev_level = 1,
+        i = 0,
+        j = 0,
         toc = "",
         href = "";
 
@@ -43,7 +45,9 @@ function checkFileReady() {
                 if (level > prev_level) {
                     toc += "<ul class='gitlab_toc_ul'>";
                 } else if (level < prev_level) {
-                    toc += "</ul>";
+                    for(j = 0; j < prev_level - level; j++) {
+                        toc += "</ul>";
+                    }
                 }
                 
                 href = fileContent.childNodes[i].childNodes[1].getAttribute("href");
