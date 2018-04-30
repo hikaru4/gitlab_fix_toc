@@ -30,8 +30,7 @@ function checkFileReady() {
         return;
     }
 
-    fileContent = document.getElementsByClassName('file-content wiki')[0] || 
-                  document.getElementsByClassName('wiki issue-realtime-trigger-pulse')[0];
+    fileContent = document.getElementsByClassName('wiki')[0];
 
     if (typeof(fileContent) == "undefined") {
         window.setTimeout(checkFileReady, 100);
