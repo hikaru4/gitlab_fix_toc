@@ -19,7 +19,7 @@
     },
     "default_title": "Gitlab Fix TOC"
   },
-  "web_accessible_resources": ["css/*", "fonts/*"],
+  "web_accessible_resources": ["css/*", "fonts/*", "images/*"],
   "content_scripts": [{
     "matches": [
       "<all_urls>"

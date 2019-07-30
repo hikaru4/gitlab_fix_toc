@@ -1,4 +1,4 @@
-var vm = {　　　　
+var vm = {
     /* Detection if we are on GitLab page */
     isGitLab: function () {
         var isGitLab = document.querySelector("meta[content^='GitLab']");
@@ -13,6 +13,10 @@ var vm = {　　　　
     },
     isIssuePage: function () {
         return $(".issue-details").size() > 0;
+    },
+
+    isIssueBoardsPage: function () {
+        return $(".issue-boards-page").size() > 0;
     }
 };
 
@@ -30,7 +34,7 @@ function checkFileReady() {
         return;
     }
 
-    fileContent = document.getElementsByClassName('wiki')[0];
+    fileContent = document.getElementsByClassName('md')[0];
 
     if (typeof(fileContent) == "undefined") {
         window.setTimeout(checkFileReady, 100);
@@ -62,6 +66,39 @@ function checkFileReady() {
     }
 }
 
+function addKanbanShortcut() {
+    kanban_icon_url = chrome.extension.getURL('images/kanban.png');
+    kanban_url = $('a[title|="Board"').attr('href');
+    kanban = '\n\
+    <li class="">\n\
+        <a class="shortcuts-boards" href="' + kanban_url + '">\n\
+            <div class="nav-icon-container">\n\
+                <img style="width: 16px;height: 16px;" src="' + kanban_icon_url + '">\n\
+            </div>\n\
+            <span class="nav-item-name">\n\
+                Boards\n\
+            </span>\n\
+        </a>\n\
+        <ul class="sidebar-sub-level-items is-fly-out-only">\n\
+            \n\<li class="fly-out-top-item">\n\
+                <a href="' + kanban_url + '">\n\
+                    <strong class="fly-out-top-item-name">\n\
+                        Boards\n\
+                    </strong>\n\
+                </a>\n\
+            </li>\n\
+        </ul>\n\
+    </li>';
+    $('.sidebar-top-level-items').prepend(kanban)
+
+    $(document).on('keydown', function ( e ) {
+        if ((e.altKey) && ( String.fromCharCode(e.which).toLowerCase() === 'c') ) {
+            location.href = document.querySelector("a[title=Board]")
+        }
+    });
+}
+
 $(function () {
     checkFileReady();
+    addKanbanShortcut();
 });
