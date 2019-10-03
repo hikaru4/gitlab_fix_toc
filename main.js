@@ -64,6 +64,9 @@ function checkFileReady() {
         $(".gitlab_toc").resizable({handles: "all"});
         $(".gitlab_toc").draggable();
     }
+
+    // 把 issue 後面直接加上 issue 標題
+    $(".gfm-issue").each(function(){$(this).after(": " + this.getAttribute('title'))});
 }
 
 function addKanbanShortcut() {
