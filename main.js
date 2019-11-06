@@ -96,14 +96,61 @@ function addKanbanShortcut() {
     </li>';
     $('.sidebar-top-level-items').prepend(kanban)
 
-    $(document).on('keydown', function ( e ) {
+    $(document).on('keydown', function (e) {
         if ((e.altKey) && ( String.fromCharCode(e.which).toLowerCase() === 'c') ) {
             location.href = document.querySelector("a[title=Board]")
         }
     });
 }
 
+function setSidebarAsIssueIframe() { 
+    if (!vm.isIssueBoardsPage()) {
+        return;
+    }
+    $(window).on( "load", function() {
+        // set sidebar as issue iframe 
+        $('.issuable-sidebar').remove();
+        $(".issue-boards-sidebar").css('width','500px');
+        $(".issue-boards-sidebar").append('<span aria-label="Fetching related merge requests" aria-hidden="true" class="spinner" style="z-index: 0;position: fixed;top: 50%;right: 240px;"></span>');
+
+        // add click event to change iframe src
+        $('.board-card').on("click", function(e) {
+            var issueLink = $($(this).find('a')[0]).attr('href');
+            var issueId = $(this).attr('data-issue-id');
+            var issueIframeId = "issue_iframe_" + issueId;
+            var issueIframe = $("#" + issueIframeId);
+
+            if (issueIframe.length > 0) {
+                $(".issue_iframe").hide();
+                issueIframe.show();
+            } else {
+                $(".issue_iframe").hide();
+                $(".issue-boards-sidebar").append('<iframe id="' + issueIframeId + '" class="issue_iframe" width="500px" height="100%" style="position: fixed;z-index: 50;" src="' + issueLink + '"></iframe>');
+                // reverse note in iframe
+                $("#" + issueIframeId).load(function() {
+                    var list = $(this).contents().find('#notes-list');
+                    var listItems = list.children('li');
+                    list.append(listItems.get().reverse());
+                });
+            }
+        });
+    });
+}
+
+function reverseNote() {
+    if (!vm.isIssuePage()) {
+        return;
+    }
+    $(window).on( "load", function() {
+        var list = $('#notes-list');
+        var listItems = list.children('li');
+        list.append(listItems.get().reverse());
+    });
+}
+
 $(function () {
     checkFileReady();
     addKanbanShortcut();
+    setSidebarAsIssueIframe();
+    reverseNote();
 });

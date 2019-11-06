@@ -34,5 +34,13 @@
       "main.js"
     ],
     "run_at": "document_end"
-  }]
+  }],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ]
 }
