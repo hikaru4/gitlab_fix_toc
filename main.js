@@ -20,7 +20,6 @@ var vm = {
     }
 };
 
-
 function checkFileReady() {
     var fileContent = null,
         level = 1,
@@ -59,10 +58,12 @@ function checkFileReady() {
             }
         }
         toc += "</ul></div>";
-        $("body").append($(toc));
 
-        $(".gitlab_toc").resizable({handles: "all"});
-        $(".gitlab_toc").draggable();
+        if (prev_level > 1) {
+            $("body").append($(toc));
+            $(".gitlab_toc").resizable({handles: "all"});
+            $(".gitlab_toc").draggable();
+        }
     }
 
     // 等頁面都做完事情以後，把 issue 後面直接加上 issue 標題
@@ -72,7 +73,11 @@ function checkFileReady() {
 }
 
 function addKanbanShortcut() {
-    kanban_icon_url = chrome.extension.getURL('images/kanban.png');
+    if (!vm.isGitLab()){
+        return;
+    }
+    
+    kanban_icon_url = chrome.runtime.getURL('images/kanban.png');
     kanban_url = $('a[title|="Board"').attr('href');
     kanban = '\n\
     <li class="">\n\
@@ -142,7 +147,23 @@ function reverseNote() {
     });
 }
 
+function injectCss() {
+    if (!vm.isGitLab()){
+        return;
+    }
+
+    var array = ["css/jquery-ui.css", "css/main.css", "css/gitlab.css"];
+    array.forEach(function (item, index) {
+        var link = document.createElement("link");
+        link.href = chrome.runtime.getURL(item);
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link);
+    });
+}
+
 $(function () {
+    injectCss();
     checkFileReady();
     addKanbanShortcut();
     setSidebarAsIssueIframe();
