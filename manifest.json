@@ -36,7 +36,7 @@
                 "js/jquery-ui.js",
                 "main.js"
             ],
-            "run_at": "document_start"
+            "run_at": "document_end"
         }
     ],
     "background": {
