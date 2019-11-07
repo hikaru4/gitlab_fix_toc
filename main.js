@@ -126,12 +126,6 @@ function setSidebarAsIssueIframe() {
             } else {
                 $(".issue_iframe").hide();
                 $(".issue-boards-sidebar").append('<iframe id="' + issueIframeId + '" class="issue_iframe" width="500px" height="100%" style="position: fixed;z-index: 50;" src="' + issueLink + '"></iframe>');
-                // reverse note in iframe
-                $("#" + issueIframeId).load(function() {
-                    var list = $(this).contents().find('#notes-list');
-                    var listItems = list.children('li');
-                    list.append(listItems.get().reverse());
-                });
             }
         });
     });
