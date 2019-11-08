@@ -30,16 +30,22 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
+            "run_at": "document_start",
+            "all_frames": true,
+            "js": ["src/inject.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_end",
             "all_frames": true,
             "js": [
                 "js/jquery-1.12.4.min.js",
                 "js/jquery-ui.js",
-                "main.js"
-            ],
-            "run_at": "document_end"
+                "src/main.js"
+            ]
         }
     ],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["src/background.js"]
     }
 }

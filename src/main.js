@@ -171,16 +171,20 @@ function injectCss() {
 
     array = ["css/jquery-ui.css", "css/main.css", "css/gitlab.css"];
     array.forEach(function (item, index) {
-        var link = document.createElement("link");
-        link.href = chrome.runtime.getURL(item);
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        document.getElementsByTagName("head")[0].appendChild(link);
+        var style_path = chrome.runtime.getURL(item);
+
+        fetch(style_path)
+            .then((response => response.text()))
+            .then(function(text){
+                var styleElement = document.createElement("style");
+                styleElement.type = "text/css";
+                styleElement.appendChild(document.createTextNode(text));
+                document.getElementsByTagName("head")[0].appendChild(styleElement);
+            });
     });
 }
 
 $(function () {
-    injectCss();
     $(window).on( "load", function() {
         addToc();
         addKanbanShortcut();
