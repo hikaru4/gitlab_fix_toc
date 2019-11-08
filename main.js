@@ -33,37 +33,39 @@ function addToc() {
         return;
     }
 
+    // waiting for md ready
     fileContent = document.getElementsByClassName('md')[0];
 
     if (typeof(fileContent) == "undefined") {
         window.setTimeout(checkFileReady, 100);
-    } else {
-        toc = "<div class='gitlab_toc ui-widget-content'>";
-        toc += "<ul class='gitlab_toc_ul'>";
-        prev_level = 1;
-        for(i = 0; i < fileContent.childNodes.length; i++) {
-            if(["H1", "H2", "H3", "H4", "H5"].includes(fileContent.childNodes[i].nodeName)) {
-                level = fileContent.childNodes[i].nodeName[1];
-                if (level > prev_level) {
-                    toc += "<ul class='gitlab_toc_ul'>";
-                } else if (level < prev_level) {
-                    for(j = 0; j < prev_level - level; j++) {
-                        toc += "</ul>";
-                    }
-                }
-                
-                href = fileContent.childNodes[i].childNodes[1].getAttribute("href");
-                toc += "<li><a href=\"" + href + "\">" + fileContent.childNodes[i].innerText + "</a></li>";
-                prev_level = level;
-            }
-        }
-        toc += "</ul></div>";
+        return;
+    }
 
-        if (prev_level > 1) {
-            $("body").append($(toc));
-            $(".gitlab_toc").resizable({handles: "all"});
-            $(".gitlab_toc").draggable();
+    toc = "<div class='gitlab_toc ui-widget-content'>";
+    toc += "<ul class='gitlab_toc_ul'>";
+    prev_level = 1;
+    for(i = 0; i < fileContent.childNodes.length; i++) {
+        if(["H1", "H2", "H3", "H4", "H5"].includes(fileContent.childNodes[i].nodeName)) {
+            level = fileContent.childNodes[i].nodeName[1];
+            if (level > prev_level) {
+                toc += "<ul class='gitlab_toc_ul'>";
+            } else if (level < prev_level) {
+                for(j = 0; j < prev_level - level; j++) {
+                    toc += "</ul>";
+                }
+            }
+            
+            href = fileContent.childNodes[i].childNodes[1].getAttribute("href");
+            toc += "<li><a href=\"" + href + "\">" + fileContent.childNodes[i].innerText + "</a></li>";
+            prev_level = level;
         }
+    }
+    toc += "</ul></div>";
+
+    if (prev_level > 1) {
+        $("body").append($(toc));
+        $(".gitlab_toc").resizable({handles: "all"});
+        $(".gitlab_toc").draggable();
     }
 
     // 把 issue 後面直接加上 issue 標題
@@ -108,6 +110,12 @@ function addKanbanShortcut() {
 
 function setSidebarAsIssueIframe() { 
     if (!vm.isIssueBoardsPage()) {
+        return;
+    }
+
+    // waiting for board card ready
+    if ( $('.board-card').length === 0 ) {
+        window.setTimeout(setSidebarAsIssueIframe, 100);
         return;
     }
 
